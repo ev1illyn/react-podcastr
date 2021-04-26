@@ -5,6 +5,7 @@ import { format, parseISO } from 'date-fns';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 import styles from './episode.module.scss';
 import { GetStaticPaths } from 'next';
+import Link from 'next/link';
 
 type Episode = {
     id: string;
@@ -23,9 +24,11 @@ export default function Episode({ episode }) {
         <div>
             <div className={styles.episode}>
                 <div className={styles.thumbnailContainer}>
-                    <button type="button">
-                        <img src="/arrow-left.svg" alt="Voltar" />
-                    </button>
+                    <Link href="/">
+                        <button type="button">
+                            <img src="/arrow-left.svg" alt="Voltar" />
+                        </button>
+                    </Link>
                     <Image width={700} height={160} src={episode.thumbnail} objectFit="cover" />
                     <button type="button">
                         <img src="/play.svg" alt="Tocar episódio" />
