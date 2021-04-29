@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { format, parseISO } from 'date-fns';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 import styles from './episode.module.scss';
-import { GetStaticPaths } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Link from 'next/link';
 
 type Episode = {
@@ -52,8 +52,14 @@ export default function Episode({ episode }) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
-        paths: [],
-        fallback: 'blocking'
+        paths: [
+            {
+                params: {
+                    slug: 'a-importancia-da-contribuicao-em-open-source'
+                }
+            }
+        ],
+        fallback: 'blocking' // or 'true' incremental static regeneration
     }
 }
 
