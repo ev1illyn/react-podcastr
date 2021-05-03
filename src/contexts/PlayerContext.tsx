@@ -4,7 +4,7 @@ type Episode = {
     title: string;
     members: string;
     thumbnail: string;
-    duration: string;
+    duration: number;
     url: string;
 };
 
@@ -24,6 +24,7 @@ type PlayerContextData = {
     toggleLoop: () => void;
     toggleShuffle: () => void;
     isShuffling: boolean;
+    clearPlayerState: () => void;
 
 };
 
@@ -60,11 +61,11 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
     }
 
     function toggleLoop() {
-        setIsShuffling(!isShuffling);
+        setIsShuffling(!isLooping);
     }
 
     function toggleShuffle() {
-
+        setIsShuffling(!isShuffling);
     }
 
     function setPlayingState(state: boolean) {
@@ -89,6 +90,11 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
         }
     }
 
+    function clearPlayerState() {
+        setEpisodeList([]);
+        setCurrentEpisodeIndex(0);
+    }
+
     // extensao do arquivo foi de .ts para tsx para retornar o html
     return (
         <PlayerContext.Provider
@@ -107,7 +113,8 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
                 isLooping,
                 toggleLoop,
                 isShuffling,
-                toggleShuffle
+                toggleShuffle,
+                clearPlayerState
             }}>
             { children}
         </PlayerContext.Provider>
