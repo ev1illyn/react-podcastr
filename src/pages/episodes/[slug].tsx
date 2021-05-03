@@ -6,6 +6,7 @@ import { convertDurationToTimeString } from '../../utils/convertDurationToTimeSt
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import Head from 'next/head';
 
 import styles from './episode.module.scss';
 import { usePlayer } from '../../contexts/PlayerContext';
@@ -27,31 +28,32 @@ export default function Episode({ episode }) {
     const { play } = usePlayer();
 
     return (
-        <div>
-            <div className={styles.episode}>
-                <div className={styles.thumbnailContainer}>
-                    <Link href="/">
-                        <button type="button">
-                            <img src="/arrow-left.svg" alt="Voltar" />
-                        </button>
-                    </Link>
-                    <Image width={700} height={160} src={episode.thumbnail} objectFit="cover" />
-                    <button type="button" onClick={() => play(episode)}>
-                        <img src="/play.svg" alt="Tocar episódio" />
+        <div className={styles.episode}>
+            <Head>
+                <title> {episode.title} | Podcastr </title>
+            </Head>
+            <div className={styles.thumbnailContainer}>
+                <Link href="/">
+                    <button type="button">
+                        <img src="/arrow-left.svg" alt="Voltar" />
                     </button>
-                </div>
-
-                <header>
-                    <h1>{episode.title}</h1>
-                    <span>{episode.members}</span>
-                    <span>{episode.publishedAt}</span>
-                    <span>{episode.durationAsString}</span>
-                </header>
-
-                <div className={styles.description}
-                    dangerouslySetInnerHTML={{ __html: episode.description }} />
-
+                </Link>
+                <Image width={700} height={160} src={episode.thumbnail} objectFit="cover" />
+                <button type="button" onClick={() => play(episode)}>
+                    <img src="/play.svg" alt="Tocar episódio" />
+                </button>
             </div>
+
+            <header>
+                <h1>{episode.title}</h1>
+                <span>{episode.members}</span>
+                <span>{episode.publishedAt}</span>
+                <span>{episode.durationAsString}</span>
+            </header>
+
+            <div className={styles.description}
+                dangerouslySetInnerHTML={{ __html: episode.description }} />
+
         </div>
     )
 }
